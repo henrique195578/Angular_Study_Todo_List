@@ -1,13 +1,13 @@
-<app-todo-input-add-items></app-todo-input-add-items>
+<app-todo-input-add-items (emitItem)="addItem($event)"></app-todo-input-add-items>
 <section>
   <ul *ngIf="taskList.length">
-<li *ngFor="let item of taskList">
+<li *ngFor="let item of taskList; let i = index">
   <input type= "checkbox" [(ngModel)]="item.checked">
   <input type="text" readonly [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}" readonly>
-  <button class="edit">Edit</button>
-  <button class="remove">Remove</button>
+  <button class="edit" (click)="editItem(i)">Edit</button>
+  <button class="remove" (click)="removeItem(i)">Remove</button>
 </li>
   </ul>
 </section>
 
-<app-todo-button-remove-all></app-todo-button-remove-all>
+<app-todo-button-remove-all *ngIf="taskList.length"(click)="removeAll()"></app-todo-button-remove-all>

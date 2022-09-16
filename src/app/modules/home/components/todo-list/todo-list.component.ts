@@ -1,5 +1,5 @@
 import { SubmittedItem } from './../../model/submitted-item';
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { TaskItem } from '../../model/task-item';
 
 @Component({
@@ -7,14 +7,20 @@ import { TaskItem } from '../../model/task-item';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
 })
-export class TodoListComponent implements OnInit {
-  public taskList: Array<TaskItem> = [
-    { task: 'Task 01', checked: false },
-    { task: 'Task 02', checked: false },
-  ];
+export class TodoListComponent implements OnInit, DoCheck {
+  public taskList: Array<TaskItem> =JSON.parse(localStorage.getItem('list') || '[]');
+  public task: string = ''
+  public index?: number;
 
   constructor() {}
   ngOnInit(): void {}
+
+  ngDoCheck(): void {
+      if(this.taskList){
+this.taskList.sort((first, last)=> Number(first.checked) - Number(last.checked))
+localStorage.setItem('list', JSON.stringify(this.taskList))
+      }
+  }
 
   public addItem(submittedItem: SubmittedItem) {
     if (submittedItem.index != undefined)
@@ -24,5 +30,21 @@ export class TodoListComponent implements OnInit {
         task: submittedItem.task,
         checked: false,
       });
+
+
+
+      this.task = '';
+      this.index = undefined;
+  }
+  public removeItem(index: number) {
+    this.taskList.splice(index, 1);
+  }
+  public removeAll() {
+    this.taskList = [];
+  }
+
+  public editItem(index:number){
+this.task = this.taskList[index].task;
+this.index = index;
   }
 }

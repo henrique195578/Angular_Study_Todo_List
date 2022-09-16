@@ -37,5 +37,8 @@ this.reset();
     this.task = '';
     this.index = undefined;
     this.buttonName = 'Add';
+
+    /* fdddd */
+    this.emitItem.emit(undefined);
   }
 }
