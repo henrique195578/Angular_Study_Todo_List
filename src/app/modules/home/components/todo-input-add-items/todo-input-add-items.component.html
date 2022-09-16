@@ -1,1 +1,7 @@
-<p>todo-input-add-items works!</p>
+<!--  keyup.enter - Para quando der enter enviar a mensagem no INPUT -->
+<!--  keyup.backspace - Para quando der enter enviar a mensagem no INPUT -->
+<input type="text" placeholder="Type your new task here..." [(ngModel)]="task" (keyup.enter)="submitItem()">
+
+<button *ngIf="(index != undefined)" (click)="reset()" class="cancel">Cancel</button>
+
+<button [ngClass]="{'update': (index != undefined) }" (click)="submitItem()">{{buttonName}}</button>
