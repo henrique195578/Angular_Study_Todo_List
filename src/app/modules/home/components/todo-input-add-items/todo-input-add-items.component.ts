@@ -1,5 +1,12 @@
 import { SubmittedItem } from './../../model/submitted-item';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-todo-input-add-items',
@@ -12,33 +19,28 @@ export class TodoInputAddItemsComponent implements OnInit, OnChanges {
   @Input() public task: string = '';
   @Input() public index?: number;
 
-
   constructor() {}
-
   ngOnInit(): void {}
 
-ngOnChanges(): void {
-    if (this.index != undefined)
-      this.buttonName = 'Update';
-}
+  ngOnChanges(): void {
+    if (this.index != undefined) this.buttonName = 'Update';
+  }
 
   public submitItem() {
     /* .trim Serve para validar os espacos ou seja nao deixaram fazer o espaco */
     if (this.task.trim()) {
       const submittedItem: SubmittedItem = {
         task: this.task,
-        index: this.index
+        index: this.index,
       };
       this.emitItem.emit(submittedItem);
     }
-this.reset();
+    this.reset();
   }
   public reset() {
     this.task = '';
     this.index = undefined;
     this.buttonName = 'Add';
-
-    /* fdddd */
     this.emitItem.emit(undefined);
   }
 }
